@@ -2,30 +2,29 @@
 
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="458.0" prefWidth="787.0" scaleShape="false" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LogInController">
+<AnchorPane id="AnchorPane" prefHeight="458.0" prefWidth="745.0" scaleShape="false" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LogInController">
     <children>
-        <ImageView fitHeight="495.0" fitWidth="787.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="495.0" fitWidth="745.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../img/slide1.jpg" />
+                <Image url="/img/slide1.jpg" />
             </image>
         </ImageView>
-        <AnchorPane layoutX="407.0" layoutY="55.0" prefHeight="348.0" prefWidth="327.0" style="-fx-border-color: white;">
-            <effect>
-                <Glow level="0.83" />
-            </effect>
+        <AnchorPane layoutX="200.0" layoutY="64.0" prefHeight="348.0" prefWidth="327.0" style="-fx-border-color: white;">
+         <children>
+              <Label id="lblError" fx:id="lblError" layoutX="55.0" layoutY="248.0" prefHeight="32.0" prefWidth="217.0" style="-fx-text-fill: red; -fx-font-size: 16;" textFill="RED" />
+              <TextField id="txtNumriIdentifikues" fx:id="txtNumriIdentifikues" focusTraversable="false" layoutX="55.0" layoutY="76.0" prefHeight="41.0" prefWidth="217.0" promptText="Numri Identifikues" style="-fx-font-size: 16; -fx-text-fill: BLACK;" />
+              <PasswordField fx:id="txtFjalekalimi" focusTraversable="false" layoutX="55.0" layoutY="132.0" opacity="1" prefHeight="41.0" prefWidth="217.0" promptText="Fjalekalimi" style="-fx-font-size: 16; -fx-text-fill: black;" />
+              <Button id="btnKycu" fx:id="BtnKycu" layoutX="55.0" layoutY="194.0" mnemonicParsing="false" opacity="0.46" prefHeight="32.0" prefWidth="217.0" style="-fx-font-size: 16; -fx-background-color: lightgreen;" text="Kyçu">
+                  <cursor>
+                      <Cursor fx:constant="HAND" />
+                  </cursor>
+              </Button>
+         </children>
         </AnchorPane>
-        <TextField id="txtNumriIdentifikues" fx:id="txtNumriIdentifikues" focusTraversable="false" layoutX="462.0" layoutY="142.0" opacity="0.88" prefHeight="41.0" prefWidth="217.0" promptText="Numri Identifikues" style="-fx-font-size: 16; -fx-text-fill: BLACK;" />
-        <PasswordField fx:id="txtFjalekalimi" focusTraversable="false" layoutX="462.0" layoutY="197.0" opacity="0.88" prefHeight="41.0" prefWidth="217.0" promptText="Fjalekalimi" style="-fx-font-size: 16; -fx-text-fill: black;" />
-        <Label id="lblError" fx:id="lblError" layoutX="462.0" layoutY="247.0" prefHeight="32.0" prefWidth="217.0" style="-fx-text-fill: red; -fx-font-size: 16;" textFill="RED" />
-        <Button id="btnKycu" fx:id="BtnKycu" layoutX="462.0" layoutY="279.0" mnemonicParsing="false" opacity="0.7" prefHeight="32.0" prefWidth="217.0" style="-fx-font-size: 16; -fx-background-color: lightblue;" text="Kyçu">
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-        </Button>
         <ProgressIndicator fx:id="progress" layoutX="364.0" layoutY="196.0" prefHeight="66.0" prefWidth="60.0" visible="false" />
     </children>
 </AnchorPane>
