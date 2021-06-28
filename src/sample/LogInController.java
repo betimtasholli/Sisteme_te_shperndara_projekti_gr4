@@ -109,7 +109,7 @@ public class LogInController implements Initializable {
 
     public void openNewPage() throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("sample.fxml")); //fix it after
+        fxmlLoader.setLocation(getClass().getResource("RentACar.fxml")); //fix it after
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
         stage.setScene(scene);

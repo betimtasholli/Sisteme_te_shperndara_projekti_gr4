@@ -8,13 +8,13 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
-public class Main extends Application {
+public class RentACar extends Application {
 
 
     @Override
     public void start(Stage stage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("LogIn.fxml"));
 
         Scene scene = new Scene(root);
         stage.setTitle("Rent A Car");
