@@ -157,13 +157,13 @@ public class RentACarController implements Initializable {
             System.out.println(sql);
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);
-//            String vetura = chVetura.getValue().toString();
-//            String targat = "";
-//            for (int i = vetura.length() - 9; i < vetura.length(); i++) {
-//                targat += (vetura.charAt(i));
-//            }
-//            sql = "UPDATE vehicle SET availability = 0 WHERE plates = '" + targat + "';";
-//            statement.executeUpdate(sql);
+            String vetura = chVetura.getValue().toString();
+            String targat = "";
+            for (int i = vetura.length() - 9; i < vetura.length(); i++) {
+                targat += (vetura.charAt(i));
+            }
+            sql = "UPDATE vehicle SET availability = 0 WHERE plates = '" + targat + "';";
+            statement.executeUpdate(sql);
             txtEmri.clear();
             txtMbiemri.clear();
             txtNrId.clear();
@@ -180,9 +180,9 @@ public class RentACarController implements Initializable {
             lblError.setText("");
             lblPagesa.setText("");
             alert.showAndWait();
-            //fillComboBox();
-            //fillTblVeturat();
-            //fillTblKlientet("SELECT * FROM client order by clientId desc;");
+            fillComboBox();
+            fillTblVeturat();
+            fillTblKlientet("SELECT * FROM rentedcars order by rentedCarId desc;");
         }
     }
 
@@ -219,7 +219,7 @@ public class RentACarController implements Initializable {
             // ekzekutimi i querit dhe ruajtja e te dhenve ne tabel
             ResultSet rs1 = connection.createStatement().executeQuery(sql);
             while (rs1.next()) {
-                dataKlient.add(new DataKlient(rs1.getString(4), rs1.getString(2), rs1.getString(3), rs1.getString("nrId"), rs1.getString(5), rs1.getString(6),rs1.getString(7)
+                dataKlient.add(new DataKlient(rs1.getString(4), rs1.getString(2), rs1.getString(3), rs1.getString("identificationNumber"), rs1.getString(5), rs1.getString(6),rs1.getString(7)
                         ,rs1.getString(8),rs1.getString(9),rs1.getString(10),rs1.getString(11)));
 
             }
@@ -248,7 +248,7 @@ public class RentACarController implements Initializable {
 
     public void kerko(){
         String sql;
-        sql = "SELECT * FROM client WHERE emri LIKE '%"+txtKerko.getText().trim()+"%' OR mbiemri LIKE '%"+txtKerko.getText().trim()+"%';";
+        sql = "SELECT * FROM rentedcars WHERE clientName LIKE '%"+txtKerko.getText().trim()+"%' OR clientLastName LIKE '%"+txtKerko.getText().trim()+"%';";
         fillTblKlientet(sql);
     }
 
@@ -301,7 +301,7 @@ public class RentACarController implements Initializable {
             data = FXCollections.observableArrayList();
 
             // ekzekutimi i querit dhe ruajtja e te dhenve ne tabel
-            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM vehicles");
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM vehicle");
             while (rs.next()) {
                 data.add(new Data(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
 
@@ -362,7 +362,7 @@ public class RentACarController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         if(result.get() == ButtonType.OK){
             try {
-                String sql = "UPDATE veturat SET Disponueshmeria = 1 WHERE id = '"+idVetura+"';";
+                String sql = "UPDATE vehicle SET availability = 1 WHERE vehicleId = '"+idVetura+"';";
                 Statement statement = connection.createStatement();
                 statement.executeUpdate(sql);
                 fillTblVeturat();
@@ -398,7 +398,7 @@ public class RentACarController implements Initializable {
             String fillQuery = "Select * from vehicle where availability = 1";
             ResultSet rs = connection.createStatement().executeQuery(fillQuery);
             while (rs.next()) {
-                chVetura.getItems().addAll(rs.getString("model") + " " + rs.getString("manufacturer") + " - " + rs.getString("maxPower"));
+                chVetura.getItems().addAll(rs.getString("name") + " " + rs.getString("model") + " - " + rs.getString("color"));
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -408,20 +408,20 @@ public class RentACarController implements Initializable {
     public void fillsrtVetura() throws SQLException{
         srtVetura.getItems().clear();
         srtVetura.getItems().add("Te gjitha");
-        String fillQuery = "Select * from veturat";
+        String fillQuery = "Select * from vehicle";
         ResultSet rs = connection.createStatement().executeQuery(fillQuery);
         while (rs.next()) {
-            srtVetura.getItems().addAll(rs.getString("Vetura") + " " + rs.getString("Modeli") + " - " + rs.getString("Targat"));
+            srtVetura.getItems().addAll(rs.getString("name") + " " + rs.getString("model") + " - " + rs.getString("plates"));
         }
     }
 
     public void sortVeturat(){
         String vetura = srtVetura.getValue().toString();
         if(vetura.equals("Te gjitha")){
-            fillTblKlientet("SELECT * FROM client order by id desc;");
+            fillTblKlientet("SELECT * FROM client order by clientId desc;");
         }
         else{
-            String sql = "SELECT * FROM client where vetura='" + vetura + "';";
+            String sql = "SELECT * FROM rentedcars where vehicleModel='" + vetura + "';";
             fillTblKlientet(sql);
         }
     }
@@ -429,19 +429,19 @@ public class RentACarController implements Initializable {
     public void fshijKlientin() throws SQLException{
         String cmimi = tblKlientet.getSelectionModel().getSelectedItem().getCmimi().get();
         String nrLet = tblKlientet.getSelectionModel().getSelectedItem().getId().get();
-        String sql = "DELETE FROM client where cmimi='"+cmimi+"' and nrId='"+nrLet+"';";
+        String sql = "DELETE FROM rentedcars where entirePrice='"+cmimi+"' and identificationNumber='"+nrLet+"';";
         Statement statement = connection.createStatement();
         statement.executeUpdate(sql);
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
         alert.setContentText("Klienti u fshi nga databaza");
         alert.showAndWait();
-        fillTblKlientet("SELECT * FROM client order by id desc;");
+        fillTblKlientet("SELECT * FROM rentedcars order by rentedCarId desc;");
     }
 
     public void fshijVeturen() throws SQLException{
         String id = tblView.getSelectionModel().getSelectedItem().getId();
-        String sql = "DELETE FROM veturat where id='"+id+"';";
+        String sql = "DELETE FROM vehicle where vehicleId='"+id+"';";
         Statement statement = connection.createStatement();
         statement.executeUpdate(sql);
         Alert alert = new Alert(AlertType.INFORMATION);
@@ -452,7 +452,7 @@ public class RentACarController implements Initializable {
     }
 
     public void refreshTblKlientet(){
-        fillTblKlientet("SELECT * FROM client order by id desc;");
+        fillTblKlientet("SELECT * FROM rentedcars order by rentedCarId desc;");
         srtVetura.setValue("Te gjitha");
         txtKerko.setText("");
     }
@@ -469,7 +469,7 @@ public class RentACarController implements Initializable {
         try {
             fillComboBox();
             fillTblVeturat();
-            fillTblKlientet("SELECT * FROM client order by id desc;");
+            fillTblKlientet("SELECT * FROM rentedcars order by rentedCarId desc;");
             fillsrtVetura();
         } catch (SQLException ex) {
             Logger.getLogger(RentACarController.class.getName()).log(Level.SEVERE, null, ex);
