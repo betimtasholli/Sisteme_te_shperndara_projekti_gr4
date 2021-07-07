@@ -15,8 +15,3 @@ Qëllimi i këtij projekti është si më poshtë:
 1. Sistemi i marrjes me qera të makinave për të mbajtur të dhëna të hollësishme si për makinat ashtu edhe për klientët, kohëzgjatjen që ata marrin me qera si dhe llojin e makinës që marrin me qera.
 
 2. Sistemi do të jetë kryesisht i dizajnuar për një kompani të vogël që i ofron klientëve shërbime me qira makinash
-
-Sistemi do të ketë dy nivele te qasjes:
-
-- Administratori
-- Konsumatori
