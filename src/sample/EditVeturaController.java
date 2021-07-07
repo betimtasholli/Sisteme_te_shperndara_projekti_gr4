@@ -37,10 +37,10 @@ public class EditVeturaController implements Initializable {
 
     public void fillComboBox1() throws SQLException{
         cmbVetura.getItems().clear();
-        String fillQuery = "Select * from veturat";
+        String fillQuery = "Select * from vehicle";
         ResultSet rs = connection.createStatement().executeQuery(fillQuery);
         while (rs.next()) {
-            cmbVetura.getItems().addAll(rs.getString("Vetura") + " " + rs.getString("Modeli") + " - " + rs.getString("Targat"));
+            cmbVetura.getItems().addAll(rs.getString("name") + " " + rs.getString("model") + " - " + rs.getString("plates"));
         }
 
     }
@@ -54,14 +54,14 @@ public class EditVeturaController implements Initializable {
             clearForm();
             String vetura = (String) cmbVetura.getValue();
             String targat = getTargat(vetura);
-            String sql = "SELECT * FROM veturat WHERE Targat = '" + targat + "';";
+            String sql = "SELECT * FROM vehicle WHERE plates = '" + targat + "';";
             ResultSet rs = connection.createStatement().executeQuery(sql);
             while (rs.next()) {
-                txtVetura.setText(rs.getString("Vetura"));
-                txtModeli.setText(rs.getString("Modeli"));
-                txtKm.setText(rs.getString("Km"));
-                txtTargat.setText(rs.getString("Targat"));
-                txtNgjyra.setText(rs.getString("Ngjyra"));
+                txtVetura.setText(rs.getString("name"));
+                txtModeli.setText(rs.getString("model"));
+                txtKm.setText(rs.getString("km"));
+                txtTargat.setText(rs.getString("plates"));
+                txtNgjyra.setText(rs.getString("color"));
             }
         }catch(SQLException ex){
             System.out.println("GABIM E KI");
@@ -80,7 +80,7 @@ public class EditVeturaController implements Initializable {
     public void fshijVeturen() throws SQLException{
         String vetura = cmbVetura.getValue().toString();
         String targat = getTargat(vetura);
-        String sql = "DELETE FROM veturat where Targat='"+targat+"';";
+        String sql = "DELETE FROM vehicle where plates='"+targat+"';";
         Statement statement = connection.createStatement();
         statement.executeUpdate(sql);
         fillComboBox1();
@@ -95,8 +95,8 @@ public class EditVeturaController implements Initializable {
         try{
             String vetura = cmbVetura.getValue().toString();
             String targat = getTargat(vetura);
-            String sql = "UPDATE veturat SET Vetura='"+txtVetura.getText()+"', Modeli='"+txtModeli.getText()+"', Km='"+txtKm.getText()+
-                    "', Targat='"+txtTargat.getText()+"', Ngjyra='"+txtNgjyra.getText()+"' WHERE Targat='"+targat+"';";
+            String sql = "UPDATE vehicle SET name='"+txtVetura.getText()+"', model='"+txtModeli.getText()+"', km='"+txtKm.getText()+
+                    "', plates='"+txtTargat.getText()+"', color='"+txtNgjyra.getText()+"' WHERE plates='"+targat+"';";
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);
             fillComboBox1();
