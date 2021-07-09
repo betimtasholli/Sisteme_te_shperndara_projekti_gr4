@@ -313,9 +313,9 @@ public class RentACarController implements Initializable {
         kolId.setCellValueFactory(new PropertyValueFactory<>("id"));
         kolVetura.setCellValueFactory(new PropertyValueFactory<>("vetura"));
         kolModeli.setCellValueFactory(new PropertyValueFactory<>("modeli"));
-        kolKm.setCellValueFactory(new PropertyValueFactory<>("km"));
-        kolTargat.setCellValueFactory(new PropertyValueFactory<>("targat"));
         kolNgjyra.setCellValueFactory(new PropertyValueFactory<>("ngjyra"));
+        kolTargat.setCellValueFactory(new PropertyValueFactory<>("targat"));
+        kolKm.setCellValueFactory(new PropertyValueFactory<>("km"));
         kolDisponueshmeria.setCellValueFactory(new PropertyValueFactory<>("disponueshmeria"));
 
         tblView.setItems(null);
@@ -411,17 +411,19 @@ public class RentACarController implements Initializable {
         String fillQuery = "Select * from vehicle";
         ResultSet rs = connection.createStatement().executeQuery(fillQuery);
         while (rs.next()) {
-            srtVetura.getItems().addAll(rs.getString("name") + " " + rs.getString("model") + " - " + rs.getString("plates"));
+            srtVetura.getItems().addAll(rs.getString("name") + " " + rs.getString("model") + " - " + rs.getString("color"));
         }
     }
 
     public void sortVeturat(){
         String vetura = srtVetura.getValue().toString();
         if(vetura.equals("Te gjitha")){
-            fillTblKlientet("SELECT * FROM client order by clientId desc;");
+            fillTblKlientet("SELECT * FROM rentedcars order by rentedCarId desc;");
         }
         else{
+
             String sql = "SELECT * FROM rentedcars where vehicleModel='" + vetura + "';";
+            System.out.print(sql);
             fillTblKlientet(sql);
         }
     }
