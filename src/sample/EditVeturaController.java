@@ -52,15 +52,15 @@ public class EditVeturaController implements Initializable {
     public void fillVeturen(){
         try{
             clearForm();
-            String vetura = (String) cmbVetura.getValue();
+            String vetura = (String) cmbVetura.getValue();;
             String targat = getTargat(vetura);
             String sql = "SELECT * FROM vehicle WHERE plates = '" + targat + "';";
             ResultSet rs = connection.createStatement().executeQuery(sql);
             while (rs.next()) {
                 txtVetura.setText(rs.getString("name"));
                 txtModeli.setText(rs.getString("model"));
-                txtKm.setText(rs.getString("km"));
-                txtTargat.setText(rs.getString("plates"));
+                txtKm.setText(rs.getString("paltes"));
+                txtTargat.setText(rs.getString("km"));
                 txtNgjyra.setText(rs.getString("color"));
             }
         }catch(SQLException ex){
@@ -69,12 +69,15 @@ public class EditVeturaController implements Initializable {
     }
 
     public String getTargat(String vetura){
-        String targat = "";
-        for(int i = vetura.length()-9; i < vetura.length(); i++){
-            targat+=(vetura.charAt(i));
+        if(vetura != null) {
+            String targat = "";
+            for (int i = vetura.length() - 9; i < vetura.length(); i++) {
+                targat += (vetura.charAt(i));
+            }
+            return targat;
+        } else {
+            return "11-111-BA";
         }
-        return targat;
-
     }
 
     public void fshijVeturen() throws SQLException{
